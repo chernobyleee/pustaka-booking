@@ -6,6 +6,7 @@ class User extends CI_Controller
     {
         parent::__construct();
         cek_login();
+        
     }
     public function index()
     {

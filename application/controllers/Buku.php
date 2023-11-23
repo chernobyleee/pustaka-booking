@@ -54,12 +54,14 @@ class Buku extends CI_Controller
         $config['max_height'] = '1000';
         $config['file_name'] = 'img' . time();
         $this->load->library('upload', $config);
+
         if ($this->form_validation->run() == false) {
             $this->load->view('templates/header', $data);
             $this->load->view('templates/sidebar', $data);
             $this->load->view('templates/topbar', $data);
             $this->load->view('buku/index', $data);
             $this->load->view('templates/footer');
+            
         } else {
             if ($this->upload->do_upload('image')) {
                 $image = $this->upload->data();
@@ -99,12 +101,14 @@ class Buku extends CI_Controller
         $data['judul'] = 'Ubah Data Buku';
         $data['user'] = $this->ModelUser->cekData(['email' => $this->session->userdata('email')])->row_array();
         $data['buku'] = $this->ModelBuku->bukuWhere(['id' => $this->uri->segment(3)])->result_array();
-        $kategori = $this->ModelBuku->joinKategoriBuku(['buku.id_kategori' =>$this->uri->segment(3)])->result_array();
+        $kategori = $this->ModelBuku->joinKategoriBuku(
+            ['buku.id_kategori' => $this-> uri -> segment(3)])->result_array();
         foreach ($kategori as $k) {
             
             $data['id'] = $k['id_kategori'];
             $data['k'] = $k['nama_kategori'];
         }
+
         $data['kategori'] = $this->ModelBuku->getKategori()->result_array();
         $this->form_validation->set_rules('judul_buku', 'Judul  Buku', 'required|min_length[3]', [
             'required' => 'Judul Buku harus diisi',
