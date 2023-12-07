@@ -4,12 +4,15 @@ class Anggota extends CI_Controller
 {
  public function __construct(){
 
- parent::__construct();
+ parent ::__construct();
    cek_login();
  }
 
  public function index(){
-  echo "<center> Featurs in soon !! </center>";
+    $this->load->view('anggota/anggota');
  }
+
+
+
 
 }
